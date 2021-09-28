@@ -1,0 +1,34 @@
+<div class="row container-12" style="height: 100vh; width: 100vw;
+left: 15px;">
+    <div class="container-fluid center bgHome">
+        <h2 style="text-align: center;margin:20px;font-size: 30pt;" class="smp1">SMP Negeri 1 Arut Selatan</h2>
+        <div style="flex-flow: column; display: flex; align-items: center;">
+            <div>
+                <img src="http://smpn1arutselatan.sch.id/assets/smp/logo1.jpg" style="width: 100px;
+                height: 100px;
+                border-radius: 50%;">
+            </div>
+            <div class="home" style="padding-top: 30px">
+                <!-- <ul style="display: flex;
+                padding: 0px;
+                margin-top: 20px;">
+                    <li class="btn btn-secondary btn-sm">Login Guru</li>
+                    <li class="btn btn-secondary btn-sm">Login Siswa</li>
+                </ul> -->
+                <h3>Login E-Raport</h3>
+                
+            </div>
+            <div class="form col-md-4">
+                <input type="text" placeholder="username" [(ngModel)]="login.user">
+                <input type="password" placeholder="password" [(ngModel)]="login.pass">
+                <select [(ngModel)]="login.sebagai">
+                    <option value="">Sebagai ...</option>
+                    <option value="guru">Guru</option>
+                    <option value="siswa">Siswa</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button class="btn btn-primary" (click)="getLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>

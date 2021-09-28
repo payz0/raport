@@ -1,0 +1,20 @@
+.home li{
+    margin: 5px 5px;
+    list-style: none;
+}
+
+.form{
+    display: flex;
+    flex-flow: column;
+    /* width: 30%; */
+}
+
+.form input,select{
+    margin: 3px !important;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.bgHome{
+    background: linear-gradient(45deg, #808bba,#a1a1ff,#c89393, transparent);
+}

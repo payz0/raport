@@ -1,0 +1,34 @@
+<div class="row">
+    <b>Tambah Kelas</b>
+    <input type="text" class="form-control" placeholder="kelas" [(ngModel)]="kelas">
+    <button class="btn btn-primary btn-sm" (click)="tambah()">Tambah</button>
+    <div class="container">
+        <hr>
+        <b>Daftar Kelas</b>
+        <hr>
+        <button class="btn btn-secondary btn-sm" (click)="exportExcel()">Download</button>
+        <table class="container table-bordered" id="kelas">
+            <thead class="bg-dark">
+                <tr style="color: beige" *ngIf="!download">
+                    <th>No</th>
+                    <th>Kelas</th>
+                    <th>Jumlah</th>
+                    <th>action</th>
+                </tr>
+                <tr *ngIf="download">
+                    <th>kelas</th>
+                    <th>id_kelas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let data of allData;let i = index">
+                    <td class="td-center" *ngIf="!download">{{i+1}}</td>
+                    <td class="td-center" >{{data.kelas}}</td>
+                    <td class="td-center" *ngIf="!download">{{data.jumlah}}</td>
+                    <td class="td-center" *ngIf="!download"><span class="btn btn-danger btn-sm" (click)="hapus(data,i)">&times;</span></td>
+                    <td *ngIf="download">{{data._id}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

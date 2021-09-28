@@ -1,0 +1,150 @@
+<div class="row" *ngIf="_datas.sebagai == 'admin'">
+    <div class="menu">
+        <ul style="display: flex;list-style:none">
+            <li class="btn btn-secondary btn-sm" (click)="walikelas = false;pilihData()">Daftar Semua Guru</li>
+            <li  class="btn btn-secondary btn-sm" (click)="walikelas = true; pilihData()">Daftar Wali Kelas</li>
+        </ul>
+    </div>
+    <ng-container *ngIf="!walikelas">
+        <ng-container *ngIf="siapEdit">
+        <div class="container">
+            Nama Guru:
+            <input type="text" list="guru" class="form-control" placeholder="nama" [(ngModel)]="guru.namaGuru" (change)="getIdGuru($event)">
+            Golongan :
+            <input type="text" class="form-control" placeholder="nip" [(ngModel)]="guru.gol">
+            NIP :
+            <input type="text" class="form-control" placeholder="nip" [(ngModel)]="guru.nip">
+            Status :
+            <select [(ngModel)]="guru.status" class="form-control">
+                <option value="wali">Wali kelas</option>
+                <option value="guru">Guru mapel</option>
+            </select>
+            <hr>
+            <button class="btn btn-primary btn-sm" (click)="update()">Simpan</button>
+            <button class="btn btn-danger btn-sm" (click)="siapEdit = false; guru = {}">Batal</button>
+        </div>
+        </ng-container>
+
+    </ng-container>
+    <ng-container *ngIf="walikelas">
+            <input disabled type="text" list="guru" class="form-control" placeholder="nama" [(ngModel)]="guru.namaGuru" (change)="getIdGuru($event)">
+            <datalist id="guru">
+                <option *ngFor="let gur of allData" >{{gur.namaGuru}}</option>
+            </datalist>
+            
+            <input type="text" list="kelas" class="form-control" placeholder="kelas" [(ngModel)]="guru.kelas" (change)="getIdKelas($event)">
+            <datalist id="kelas">
+                <option *ngFor="let kelas of dataKelas" >{{kelas.kelas}}</option>
+            </datalist>
+            <button class="btn btn-primary btn-sm" (click)="update()">Simpan</button>
+    </ng-container>
+        <div class="container">
+            <hr>
+            <div class="float-right" *ngIf="!walikelas">
+                <input type="file" (change)="excel($event)" id="excel" style="display:none">
+                <label for="excel" class="btn btn-info">Upload excel</label>
+            </div>
+            <b *ngIf="walikelas">Daftar wali kelas</b>
+            <b *ngIf="!walikelas">Daftar semua guru</b>
+            <hr>
+            <table class="container table-bordered">
+                <thead class="bg-dark">
+                    <tr style="color: beige">
+                        <th style="width: fit-content">No</th>
+                        <th>Nama Guru</th>
+                        <th *ngIf="!walikelas">NIP</th>
+                        <th *ngIf="!walikelas">Password</th>
+                        <th>
+                           <span *ngIf="walikelas">Kelas</span>
+                           <span *ngIf="!walikelas">Status</span>
+                        </th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let data of allData;let i = index">
+                        <td class="td-center" style="width: fit-content">{{i+1}}</td>
+                        <td style="vertical-align: middle" >{{data.namaGuru}}</td>
+                        <td class="td-center" *ngIf="!walikelas">{{data.nip}}</td>
+                        <td class="td-center" *ngIf="!walikelas">{{data.password}}</td>
+                        <td class="td-center" >
+                           <span *ngIf="walikelas">{{data.kelas}}</span> 
+                           <span *ngIf="!walikelas">{{data.status}}</span>
+                        </td>
+                        <td class="td-center">
+                            <span style="cursor:pointer" (click)="edit(data,i);siapEdit = true">edit</span> 
+                            <span  *ngIf="!walikelas"> || </span> 
+                            <span style="cursor:pointer" (click)="hapus(data,i)" *ngIf="!walikelas">&times;</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+      
+<!-- batas menu admin -->
+<!-- menu sebagai guru -->
+<div class="container" *ngIf="_datas.sebagai == 'guru'">
+        Nama Guru:
+        <input type="text" list="guru" class="form-control" placeholder="nama" [(ngModel)]="guru.namaGuru" (change)="getIdGuru($event)">
+        Golongan :
+        <input type="text" class="form-control" placeholder="nip" [(ngModel)]="guru.gol">
+        NIP :
+        <input type="text" class="form-control" placeholder="nip" [(ngModel)]="guru.nip">
+        Password :
+        <input type="text" class="form-control" placeholder="nip" [(ngModel)]="guru.password">
+        <br>
+        Tugas:
+        <br>
+        {{_datas.dataProfil.status}} kelas {{namaKelas}} <br>
+        <div style="    display: flex;
+        flex-direction: column-reverse;">
+            <input type="file" id="upload" (change)="upload($event)" style="display: none">
+            <label for="upload" class="btn btn-info">Upload tanda tangan</label>
+            <img src="{{_datas.baseUrl2}}foto/{{guru.foto}}" alt="" style="height:100px">
+        </div>
+       
+        <hr>
+        <button class="btn btn-primary btn-sm" (click)="update()">Simpan</button>
+        <button class="btn btn-danger btn-sm" (click)="siapEdit = false; guru = {}">Batal</button>
+        <div class="float-right">
+            <button class="btn btn-secondary" (click)="publish = !publish;shareRaport()" [ngClass]="publish ? 'btn-warning':'btn-secondary'">publish</button>
+        </div>
+</div>
+    
+<!-- dialogbox -->
+<div class="latar" *ngIf="dialogBox">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="bodybox col-md-8" style="left:10%">
+            <div class="title">Nama guru</div>
+            <div class="badan">
+                <table class="container table-bordered">
+                    <thead class="bg-dark">
+                        <tr style="color: beige">
+                            <th>No</th>
+                            <th>Nama Guru</th>
+                            <th>NIP</th>
+                            <th>Golongan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor = "let excel of dataImportExcel;let i = index">
+                            <td class="td-center">{{i+1}}</td>
+                            <td class="td-center" >{{excel.namaGuru}}</td>
+                            <td class="td-center" >{{excel.nip}}</td>
+                            <td class="td-center" >{{excel.gol}}</td>
+                            <td class="td-center">{{excel.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <button class="btn btn-danger btn-sm" (click)="tambah()">Simpan</button>
+                    <button class="btn btn-secondary btn-sm" (click)="dialogBox = false; dataImportExcel = []">Batal</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

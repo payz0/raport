@@ -1,0 +1,303 @@
+<div class="row">
+    <div class="container">
+        <div class="jumbotron" style="text-align: center;">
+            <h3>Raport Mid Semester Tahun Ajaran {{tahun}}/{{tahun2}}</h3><br>
+            <button class="btn btn-primary btn-lg" (click)="lihatRaport('ganjil')">Semester Ganjil</button>
+            <button class="btn btn-danger btn-lg" (click)="lihatRaport('genap')">Semester Genap</button>
+        </div>
+    </div>
+</div>
+
+<div class="latar dialogbox2" *ngIf="viewRaport">
+        <div class="row" >
+            <!-- <div class="col-md-2"></div> -->
+            <div class="bodybox col-md-11 " id="raport" >
+                <div class="kop">
+                    <table class="container-fluid" >
+                            <tr>
+                                <td>Nama Sekolah </td><td>:</td><td>SMP Negeri 1 Arut Selatan</td>
+                                <td></td>
+                                <td>Kelas</td><td>:</td><td>{{namaKelas}}</td>
+                            </tr>
+                             <tr>
+                                <td>Alamat</td><td>:</td><td>Jl. P.Diponegoro. No.26</td>
+                                <td></td>
+                                <td>Semester</td><td>:</td><td>{{mapel.semester}}</td>
+                            </tr>
+                             <tr>
+                                <td>Nama </td><td>:</td><td>{{mapel.namaSiswa}}</td>
+                                <td></td>
+                                <td>Tahun Ajaran</td><td>:</td><td>{{tahunPelajaran(mapel.tahunAjaran)}}</td>
+                            </tr>
+                             <tr>
+                                <td>Nis /NISN</td><td>:</td><td>{{mapel.nis}}/{{mapel.nisn}}</td>
+                                <td></td>
+                                <td></td><td></td><td></td>
+                            </tr>
+                        </table>
+                </div>
+                        <hr>
+                        <b>A. SIKAP</b><br>
+                        1.Sikap Spiritual
+                        <table class="raport" border="1" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px">PREDIKAT</th>
+                                    <th>Deskripsi</th>
+                                </tr>
+                            </thead>
+                            <tr >
+                                <td style="text-align: center">
+                                    {{mapel.spiritual}}
+                                </td>
+                                <td style="padding-left:10px ">
+                                    {{mapel.spiritual_desc}}
+                                </td>
+                            </tr>
+                        </table>
+                        2.Sikap Sosial
+                        <table class="raport" border="1" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px">PREDIKAT</th>
+                                    <th>Deskripsi</th>
+                                </tr>
+                            </thead>
+                            <tr >
+                                <td style="text-align: center">
+                                        {{mapel.sosial}}
+                                </td>
+                                <td style="padding-left:10px ">
+                                        {{mapel.sosial_desc}}
+                                </td>
+                            </tr>
+                        </table>
+                        <b>B. Pengetahuan dan Keterampilan</b>
+                        <br>
+                        Ketuntasan Belajar Minimal  {{mapel.kkm}}
+                        <table class="raport" border="1" width="100%" style="page-break-inside: avoid;">
+                            <thead >
+                                <tr>
+                                    <th rowspan="2" class="td-center" style="width:1px">No</th>
+                                    <th rowspan="2" class="td-center">Mata Pelajaran</th>
+                                    <th colspan="3">Pengetahun</th>
+                                    <th colspan="3">Keterampilan</th>
+                                </tr>
+                                <tr>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Angka</th>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Predikat</th>
+                                    <th style="font-size: 10pt;">Deskripsi</th>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Angka</th>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Predikat</th>
+                                    <th style="font-size: 10pt">Deskripsi</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"><b>Kelompok A</b></td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:9pt">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Pendidikan Agama</td>
+                                    <td>{{mapel.agama_peng}}</td>
+                                    <td>{{mapel.agama_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.agama_peng_desc}}</p></td>
+                                    <td>{{mapel.agama_ket}}</td>
+                                    <td>{{mapel.agama_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.agama_ket_desc}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Pendidikan Pancasila dan Kewarganegaraan</td>
+                                    <td>{{mapel.pkn_peng}}</td>
+                                    <td>{{mapel.pkn_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.pkn_peng_desc}}</p></td>
+                                    <td>{{mapel.pkn_ket}}</td>
+                                    <td>{{mapel.pkn_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.pkn_ket_desc}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Bahasa Indonesia</td>
+                                    <td>{{mapel.bhsindo_peng}}</td>
+                                    <td>{{mapel.bhsindo_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.bhsindo_peng_desc}}</p></td>
+                                    <td>{{mapel.bhsindo_ket}}</td>
+                                    <td>{{mapel.bhsindo_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.bhsindo_ket_desc}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Matematika</td>
+                                    <td>{{mapel.matematika_peng}}</td>
+                                    <td>{{mapel.matematika_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.matematika_peng_desc}}</p></td>
+                                    <td>{{mapel.matematika_ket}}</td>
+                                    <td>{{mapel.matematika_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.matematika_ket_desc}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Ilmu Pengetahuan Alam</td>
+                                    <td>{{mapel.ipa_peng}}</td>
+                                    <td>{{mapel.ipa_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.ipa_peng_desc}}</p></td>
+                                    <td>{{mapel.ipa_ket}}</td>
+                                    <td>{{mapel.ipa_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.ipa_ket_desc}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Ilmu Pengetahuan Sosial</td>
+                                    <td>{{mapel.ips_peng}}</td>
+                                    <td>{{mapel.ips_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.ips_peng_desc}}</p></td>
+                                    <td>{{mapel.ips_ket}}</td>
+                                    <td>{{mapel.ips_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.ips_ket_desc}}</p> </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Bahasa Inggris</td>
+                                    <td>{{mapel.bhsinggris_peng}}</td>
+                                    <td>{{mapel.bhsinggris_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.bhsinggris_peng_desc}}</p></td>
+                                    <td>{{mapel.bhsinggris_ket}}</td>
+                                    <td>{{mapel.bhsinggris_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.bhsinggris_ket_desc}}</p></td>
+                                </tr>
+                            
+                                <tr >
+                                    <td colspan="8"><b>Kelompok B</b></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Seni Budaya</td>
+                                    <td>{{mapel.senbud_peng}}</td>
+                                    <td>{{mapel.senbud_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.senbud_peng_desc}}</p></td>
+                                    <td>{{mapel.senbud_ket}}</td>
+                                    <td>{{mapel.senbud_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.senbud_ket_desc}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Pendidikan Jasmani, Olah Raga, dan Kesehatan</td>
+                                    <td>{{mapel.penjas_peng}}</td>
+                                    <td>{{mapel.penjas_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.penjas_peng_desc}}</p></td>
+                                    <td>{{mapel.penjas_ket}}</td>
+                                    <td>{{mapel.penjas_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.penjas_ket_desc}}</p></td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Prakarya</td>
+                                    <td>{{mapel.prakarya_peng}}</td>
+                                    <td>{{mapel.prakarya_peng_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.prakarya_peng_desc}}</p></td>
+                                    <td>{{mapel.prakarya_ket}}</td>
+                                    <td>{{mapel.prakarya_ket_hrf}}</td>
+                                    <td style="font-size:8pt" ><p>{{mapel.prakarya_ket_desc}}</p></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                 <div id="nextpage1"></div>
+                        <b>C. Extrakurikuler</b> <br>
+                        <table class=" raport" border="1" width="100%" >
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px">No</th>
+                                    <th>Kegiatan Ektrakurikuler</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tr >
+                                <td class="td-center">1</td>
+                                <td style="padding-left:10px ">{{mapel.extra1}}</td>
+                                <td style="padding-left:10px ">{{mapel.extra1_ket}}</td> 
+                            </tr>
+                              <tr >
+                                <td class="td-center">2</td>
+                                <td style="padding-left:10px ">{{mapel.extra2}}</td>
+                                <td style="padding-left:10px ">{{mapel.extra2_ket}}</td>
+                            </tr>
+                              <tr >
+                                <td class="td-center">3</td>
+                                <td style="padding-left:10px ">{{mapel.extra3}} </td>
+                                <td style="padding-left:10px ">{{mapel.extra3_ket}} </td>
+                            </tr>
+                        </table>
+                        <b>D. Ketidakhadiran</b><br>
+                        <table class="raport"  border="1" width="100%">
+                            <tr >
+                                <td class="td-center">
+                                    Sakit
+                                </td>
+                                <td class="td-center">{{mapel.sakit}} Hari</td>
+                            </tr>
+                            <tr >
+                                <td class="td-center">
+                                    Izin
+                                </td>
+                                <td class="td-center">{{mapel.izin}} Hari</td>
+                            </tr>
+                            <tr >
+                                <td class="td-center">
+                                    Alpa
+                                </td>
+                                <td class="td-center">{{mapel.alpa}} Hari</td>
+                            </tr>
+                        </table>
+                        <div class="container">
+                            <div class="float-right" style="position: relative;">
+                                Pangkalan Bun, {{_datas.formatTanggal(mapel.tglRaport)}} <br>
+                                wali kelas, <br><br><br><br>
+                                <img src="{{_datas.baseUrl2}}foto/{{guru.foto}}"  style="    position: absolute;
+                                top: 0px;
+                                opacity: 0.2;
+                                left: -45px;
+                                width: 200px;">
+                                <u>{{guru.namaGuru}}</u><br>
+                                NIP.{{guru.nip}}
+                            </div>
+                        </div>
+                        <div class="row" style="position: fixed;z-index:99999;    top: 77px;right: 40px;">
+                                
+                                <button class="btn btn-danger" (click)="cetak()">Simpan</button>
+                                <button class="btn btn-primary" (click)="viewRaport = false">Tutup</button>
+                        </div>  
+                    </div>
+            <!-- <div class="col-md-1"></div> -->
+         
+        </div>
+    </div>
+
+
+    <!-- loader -->
+    <div class="latar" *ngIf="!dataCoplete" >
+        <span style="    position: fixed;
+        top: 58%;
+        text-align: center;
+        width: 100%;
+        color: white;">
+            ambil data ...
+        </span>
+        <div class="container" >
+                <div class="row">
+                <div id="loader">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="loading"></div>
+                </div>
+                </div>
+            </div>
+
+          
+    </div>

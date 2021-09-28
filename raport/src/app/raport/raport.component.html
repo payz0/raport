@@ -1,0 +1,709 @@
+
+       
+<div class="row" style="position: relative;">
+    <div style="position: absolute;right: 0px;">
+        <button (click)="exportExcel()" class="btn btn-danger btn-sm">download</button> ||
+        <input type="file" (change)="excel($event)" id="excel4" style="display:none">
+        <label for="excel4" class="btn btn-secondary btn-sm" style="    margin-bottom: 0px;">Upload excel</label>
+    </div>
+    <b>Daftar Nilai</b>
+
+    <div class="container-fluid" style="    background: #68878b;margin-top: 10px;color: white;">
+        <table>
+            <tr>
+                <td>Tahun Ajaran</td>
+                <td> 
+                    <select class="form-control" [(ngModel)]="tahunRaport" (change)="getAllData()">
+                        <option value="{{tahun.split('/')[0]}}" *ngFor="let tahun of tahunAjaran">{{tahun}}</option>
+                    </select>
+                </td>
+                <td>Semester</td>
+                <td>
+                    <select class="form-control" [(ngModel)]="semester" (change)="getAllData()">
+                        <option value="ganjil">Ganjil</option>
+                        <option value="genap">Genap</option>
+                    </select>
+                </td>
+                <td> Tanggal Raport</td>
+                <td>
+                    <span *ngIf="!editTgl" (click)="editTgl = true" style="background: rgb(207, 207, 207);
+                    padding: 10px;color: black;">: {{_datas.formatTanggal(tglRaport)}}</span>
+                    
+                    <input *ngIf="editTgl" type="date" [(ngModel)]="tglRaport" (change)="editTgl = false">
+                </td>
+            </tr>
+        </table>
+       
+    </div>
+    <div class="isiTabel" style="overflow-x: auto;">
+        <table class="table table-bordered" id="siswa" style="margin-top:2px;">
+            <thead class="bg-dark text-white" >
+                <tr *ngIf="!download">
+                    <th rowspan="3">No</th>
+                    <th rowspan="3" style="min-width: 200px">Nama</th>
+                    <th colspan="20" >Mapel</th>
+                    <th rowspan="3">Lihat</th>
+                </tr>
+                <tr *ngIf="!download">
+                    <th colspan="2">Agama</th> 
+                    <th colspan="2">PKn</th> 
+                    <th colspan="2">Bahasa Indonesia</th> 
+                    <th colspan="2">Bahasa Inggris</th> 
+                    <th colspan="2">IPA</th> 
+                    <th colspan="2">IPS</th> 
+                    <th colspan="2">Matematika</th> 
+                    <th colspan="2">SenBud</th> 
+                    <th colspan="2">Penjas</th> 
+                    <th colspan="2">Prakarya</th> 
+                </tr>
+                 <tr *ngIf="!download">
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th>
+                    <th>Peng</th> 
+                    <th>Ket</th> 
+                </tr>
+                <tr *ngIf="download">
+                        <th>No</th>
+                        <th>id_siswa</th>
+                        <th>nama</th>
+                        <th>agama_peng</th>
+                        <th>pkn_peng</th>
+                        <th>bhsindo_peng</th>
+                        <th>bhsinggris_peng</th>
+                        <th>ipa_peng</th>
+                        <th>ips_peng</th>
+                        <th>matematika_peng</th>
+                        <th>senbud_peng</th>
+                        <th>penjas_peng</th>
+                        <th>prakarya_peng</th>
+
+                        <th>agama_ket</th>
+                        <th>pkn_ket</th>
+                        <th>bhsindo_ket</th>
+                        <th>bhsinggris_ket</th>
+                        <th>ipa_ket</th>
+                        <th>ips_ket</th>
+                        <th>matematika_ket</th>
+                        <th>senbud_ket</th>
+                        <th>penjas_ket</th>
+                        <th>prakarya_ket</th>
+
+                        <th>agama_peng_hrf</th>
+                        <th>pkn_peng_hrf</th>
+                        <th>bhsindo_peng_hrf</th>
+                        <th>bhsinggris_peng_hrf</th>
+                        <th>ipa_peng_hrf</th>
+                        <th>ips_peng_hrf</th>
+                        <th>matematika_peng_hrf</th>
+                        <th>senbud_peng_hrf</th>
+                        <th>penjas_peng_hrf</th>
+                        <th>prakarya_peng_hrf</th>
+
+                        <th>agama_ket_hrf</th>
+                        <th>pkn_ket_hrf</th>
+                        <th>bhsindo_ket_hrf</th>
+                        <th>bhsinggris_ket_hrf</th>
+                        <th>ipa_ket_hrf</th>
+                        <th>ips_ket_hrf</th>
+                        <th>matematika_ket_hrf</th>
+                        <th>senbud_ket_hrf</th>
+                        <th>penjas_ket_hrf</th>
+                        <th>prakarya_ket_hrf</th>
+
+                        <th>agama_peng_desc</th>
+                        <th>pkn_peng_desc</th>
+                        <th>bhsindo_peng_desc</th>
+                        <th>bhsinggris_peng_desc</th>
+                        <th>ipa_peng_desc</th>
+                        <th>ips_peng_desc</th>
+                        <th>matematika_peng_desc</th>
+                        <th>senbud_peng_desc</th>
+                        <th>penjas_peng_desc</th>
+                        <th>prakarya_peng_desc</th>
+
+                        <th>agama_ket_desc</th>
+                        <th>pkn_ket_desc</th>
+                        <th>bhsindo_ket_desc</th>
+                        <th>bhsinggris_ket_desc</th>
+                        <th>ipa_ket_desc</th>
+                        <th>ips_ket_desc</th>
+                        <th>matematika_ket_desc</th>
+                        <th>senbud_ket_desc</th>
+                        <th>penjas_ket_desc</th>
+                        <th>prakarya_ket_desc</th>
+
+                        <th>spiritual</th>
+                        <th>sosial</th>
+                        <th>spiritual_desc</th>
+                        <th>sosial_desc</th>
+                        <th>extra1</th>
+                        <th>extra2</th>
+                        <th>extra3</th>
+                        <th>extra1_ket</th>
+                        <th>extra2_ket</th>
+                        <th>extra3_ket</th>
+                        <th>sakit</th>
+                        <th>izin</th>
+                        <th>alpa</th>
+                        <!-- <th>kkm</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let mapel of allData; let i = index">
+                    <td class="td-center">{{i+1}}</td>
+                    <td *ngIf="download">{{mapel.id_siswa}}</td>
+                    <td style="vertical-align: middle">{{mapel.nama}}</td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.agama_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.agama_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.pkn_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.pkn_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.bhsindo_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.bhsindo_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.bhsinggris_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.bhsinggris_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.ipa_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.ipa_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.ips_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.ips_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.matematika_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.matematika_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.senbud_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.senbud_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.penjas_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.penjas_ket">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.prakarya_peng">
+                    </td>
+                    <td class="td-center">
+                        <input type="text" class="form-control" placeholder="00" [(ngModel)]="mapel.prakarya_ket">
+                    </td>
+                    <!-- nilai keterampilan -->
+  
+                    <td style="    vertical-align: middle;text-align: center;" *ngIf="!download">
+                        <button class="btn btn-primary btn-sm" (click)="detail(mapel)">view</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+
+    <button (click)="tambah(allData)" class="btn btn-primary float-right">Simpan</button>
+</div>
+
+
+<!-- dialogbox -->
+<div class="latar" *ngIf="dialogBox">
+          <div class="row">
+              <div class="col-md-2"></div>
+              <div class="bodybox col-md-8" style="left: 8%;">
+                  <div class="title">Nama guru</div>
+                  <div class="badan">
+                      <table class="container table-bordered">
+                          <thead class="bg-dark">
+                              <tr style="color: beige">
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">Nama</th>
+                                    <th colspan="2">Agama</th> 
+                                    <th colspan="2">PKn</th> 
+                                    <th colspan="2">Bahasa Indonesia</th> 
+                                    <th colspan="2">Bahasa Inggris</th> 
+                                    <th colspan="2">IPA</th> 
+                                    <th colspan="2">IPS</th> 
+                                    <th colspan="2">Matematika</th> 
+                                    <th colspan="2">SenBud</th> 
+                                    <th colspan="2">Penjas</th> 
+                                    <th colspan="2">Prakarya</th> 
+                              </tr>
+                              <tr class="text-white">
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th>
+                                    <th>P</th> 
+                                    <th>K</th> 
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor = "let excel of dataImportExcel;let i = index">
+                                  <td class="td-center">{{i+1}}</td>
+                                  <td class="td-center" >{{excel.nama}}</td>
+                                  <td class="td-center" >{{excel.agama_peng}}</td>
+                                  <td class="td-center" >{{excel.agama_ket}}</td>
+                                  <td class="td-center" >{{excel.pkn_peng}}</td>
+                                  <td class="td-center" >{{excel.pkn_ket}}</td>
+                                  <td class="td-center" >{{excel.bhsindo_peng}}</td>
+                                  <td class="td-center" >{{excel.bhsindo_ket}}</td>
+                                  <td class="td-center">{{excel.bhsinggris_peng}}</td>
+                                  <td class="td-center">{{excel.bhsinggris_ket}}</td>
+                                  <td class="td-center">{{excel.ipa_peng}}</td>
+                                  <td class="td-center">{{excel.ipa_ket}}</td>
+                                  <td class="td-center">{{excel.ips_peng}}</td>
+                                  <td class="td-center">{{excel.ips_ket}}</td>
+                                  <td class="td-center">{{excel.matematika_peng}}</td>
+                                  <td class="td-center">{{excel.matematika_ket}}</td>
+                                  <td class="td-center">{{excel.senbud_peng}}</td>
+                                  <td class="td-center">{{excel.senbud_ket}}</td>
+                                  <td class="td-center">{{excel.penjas_peng}}</td>
+                                  <td class="td-center">{{excel.penjas_ket}}</td>
+                                  <td class="td-center">{{excel.prakarya_peng}}</td>
+                                  <td class="td-center">{{excel.prakarya_ket}}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div>
+                          <button class="btn btn-danger btn-sm" (click)="tambah(dataImportExcel)">Simpan</button>
+                          <button class="btn btn-secondary btn-sm" (click)="dialogBox = false; dataImportExcel = []">Batal</button>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-2"></div>
+          </div>
+      </div>
+
+
+    <div class="latar dialogbox2" *ngIf="showRaport">
+        <div class="row">
+            <!-- <div class="col-md-2"></div> -->
+            <div class="bodybox col-md-11 " (dblclick)="editDesc = !editDesc">
+                <div class="kop">
+                    <table class="container-fluid">
+                            <tr>
+                                <td>Nama Sekolah </td><td>:</td><td>SMP Negeri 1 Arut Selatan</td>
+                                <td></td>
+                                <td>Kelas</td><td>:</td><td>{{namaKelas}}</td>
+                            </tr>
+                             <tr>
+                                <td>Alamat</td><td>:</td><td>Jl. P.Diponegoro. No.26</td>
+                                <td></td>
+                                <td>Semester</td><td>:</td><td>{{mapel.semester}}</td>
+                            </tr>
+                             <tr>
+                                <td>Nama </td><td>:</td><td>{{mapel.nama}}</td>
+                                <td></td>
+                                <td>Tahun Ajaran</td><td>:</td><td>{{tahunPelajaran(mapel.tahunAjaran)}}</td>
+                            </tr>
+                             <tr>
+                                <td>Nis /NISN</td><td>:</td><td>{{mapel.nis}}/{{mapel.nisn}}</td>
+                                <td></td>
+                                <td></td><td></td><td></td>
+                            </tr>
+                        </table>
+                </div>
+                        <hr>
+                        <b>A. SIKAP</b><br>
+                        1.Sikap Spiritual
+                        <table class="table table-bordered raport">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px">PREDIKAT</th>
+                                    <th>Deskripsi</th>
+                                </tr>
+                            </thead>
+                            <tr >
+                                <td style="text-align: center">
+                                    {{mapel.spiritual}}
+                                </td>
+                                <td style="padding-left:10px ">
+                                    {{mapel.spiritual_desc}}
+                                </td>
+                            </tr>
+                        </table>
+                        2.Sikap Sosial
+                        <table class="table table-bordered raport">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px">PREDIKAT</th>
+                                    <th>Deskripsi</th>
+                                </tr>
+                            </thead>
+                            <tr >
+                                <td style="text-align: center">
+                                        {{mapel.sosial}}
+                                </td>
+                                <td style="padding-left:10px ">
+                                        {{mapel.sosial_desc}}
+                                </td>
+                            </tr>
+                        </table>
+                        <b>B. Pengetahuan dan Keterampilan</b>
+                        <br>
+                        Ketuntasan Belajar Minimal  {{mapel.kkm}}
+                        <table class="table raport">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="td-center" style="width:1px">No</th>
+                                    <th rowspan="2" class="td-center">Mata Pelajaran</th>
+                                    <th colspan="3">Pengetahun</th>
+                                    <th colspan="3">Keterampilan</th>
+                                </tr>
+                                <tr>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Angka</th>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Predikat</th>
+                                    <th style="font-size: 10pt">Deskripsi</th>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Angka</th>
+                                    <th style="width:1px;    padding: 2px; font-size: 10pt">Predikat</th>
+                                    <th style="font-size: 10pt">Deskripsi</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"><b>Kelompok A</b></td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:10pt ">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Pendidikan Agama</td>
+                                    <td>{{mapel.agama_peng}}</td>
+                                    <td>{{mapel.agama_peng_hrf}}</td>
+                                    <td>
+                                        <span *ngIf="!editDesc">{{mapel.agama_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.agama_peng_desc" *ngIf="editDesc">
+                                        </textarea>
+                                    </td>
+                                    <td>{{mapel.agama_ket}}</td>
+                                    <td>{{mapel.agama_ket_hrf}}</td>
+                                    <td>
+                                        <span *ngIf="!editDesc">{{mapel.agama_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.agama_ket_desc" *ngIf="editDesc">
+                                        </textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Pendidikan Pancasila dan Kewarganegaraan</td>
+                                    <td>{{mapel.pkn_peng}}</td>
+                                    <td>{{mapel.pkn_peng_hrf}}</td>
+                                    <td>
+                                        <span *ngIf="!editDesc">{{mapel.pkn_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.pkn_peng_desc" *ngIf="editDesc">
+                                        </textarea>
+                                    </td>
+                                    <td>{{mapel.pkn_ket}}</td>
+                                    <td>{{mapel.pkn_ket_hrf}}</td>
+                                    <td>
+                                        
+                                        <span *ngIf="!editDesc">{{mapel.pkn_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.pkn_ket_desc" *ngIf="editDesc">
+                                        </textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Bahasa Indonesia</td>
+                                    <td>{{mapel.bhsindo_peng}}</td>
+                                    <td>{{mapel.bhsindo_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.bhsindo_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.bhsindo_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.bhsindo_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.bhsindo_ket}}</td>
+                                    <td>{{mapel.bhsindo_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.bhsindo_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.bhsindo_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.bhsindo_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Matematika</td>
+                                    <td>{{mapel.matematika_peng}}</td>
+                                    <td>{{mapel.matematika_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.matematika_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.matematika_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.matematika_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.matematika_ket}}</td>
+                                    <td>{{mapel.matematika_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.matematika_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.matematika_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.matematika_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Ilmu Pengetahuan Alam</td>
+                                    <td>{{mapel.ipa_peng}}</td>
+                                    <td>{{mapel.ipa_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.ipa_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.ipa_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.ipa_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.ipa_ket}}</td>
+                                    <td>{{mapel.ipa_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.ipa_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.ipa_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.ipa_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Ilmu Pengetahuan Sosial</td>
+                                    <td>{{mapel.ips_peng}}</td>
+                                    <td>{{mapel.ips_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.ips_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.ips_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.ips_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.ips_ket}}</td>
+                                    <td>{{mapel.ips_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.ips_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.ips_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.ips_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Bahasa Inggris</td>
+                                    <td>{{mapel.bhsinggris_peng}}</td>
+                                    <td>{{mapel.bhsinggris_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.bhsinggris_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.bhsinggris_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.bhsinggris_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.bhsinggris_ket}}</td>
+                                    <td>{{mapel.bhsinggris_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.bhsinggris_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.bhsinggris_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.bhsinggris_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+            
+                                <tr>
+                                    <td colspan="8"><b>Kelompok B</b></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Seni Budaya</td>
+                                    <td>{{mapel.senbud_peng}}</td>
+                                    <td>{{mapel.senbud_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.senbud_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.senbud_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.senbud_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.senbud_ket}}</td>
+                                    <td>{{mapel.senbud_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.senbud_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.senbud_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.senbud_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Pendidikan Jasmani, Olah Raga, dan Kesehatan</td>
+                                    <td>{{mapel.penjas_peng}}</td>
+                                    <td>{{mapel.penjas_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.penjas_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.penjas_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.penjas_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.penjas_ket}}</td>
+                                    <td>{{mapel.penjas_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.penjas_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.penjas_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.penjas_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Prakarya</td>
+                                    <td>{{mapel.prakarya_peng}}</td>
+                                    <td>{{mapel.prakarya_peng_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.prakarya_peng_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.prakarya_peng_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.prakarya_peng_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                    <td>{{mapel.prakarya_ket}}</td>
+                                    <td>{{mapel.prakarya_ket_hrf}}</td>
+                                    <td>
+                                        <!-- {{mapel.prakarya_ket_desc}} -->
+                                        <span *ngIf="!editDesc">{{mapel.prakarya_ket_desc}}</span>
+                                        <textarea type="text" [(ngModel)]="mapel.prakarya_ket_desc" *ngIf="editDesc"></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <b>C. Extrakurikuler</b> <br>
+                        <table class="table table-bordered raport">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px">No</th>
+                                    <th>Kegiatan Ektrakurikuler</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tr >
+                                <td class="td-center">1</td>
+                                <td style="padding-left:10px ">
+                                   <!-- {{mapel.extra1}} -->
+                                   <span *ngIf="!editDesc">{{mapel.extra1}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.extra1" *ngIf="editDesc"></textarea>
+                                </td>
+                                <td style="padding-left:10px ">
+                                    <!-- {{mapel.extra1_ket}} -->
+                                    <span *ngIf="!editDesc">{{mapel.extra1_ket}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.extra1_ket" *ngIf="editDesc"></textarea>
+                                </td>
+                            </tr>
+                              <tr >
+                                <td class="td-center">2</td>
+                                <td style="padding-left:10px ">
+                                    <!-- {{mapel.extra2}} -->
+                                    <span *ngIf="!editDesc">{{mapel.extra2}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.extra2" *ngIf="editDesc"></textarea>
+                                </td>
+                                <td style="padding-left:10px ">
+                                    <!-- {{mapel.extra2_ket}} -->
+                                    <span *ngIf="!editDesc">{{mapel.extra2_ket}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.extra2_ket" *ngIf="editDesc"></textarea>
+                                </td>
+                            </tr>
+                              <tr >
+                                <td class="td-center">3</td>
+                                <td style="padding-left:10px ">
+                                    <!-- {{mapel.extra3}} -->
+                                    <span *ngIf="!editDesc">{{mapel.extra3}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.extra3" *ngIf="editDesc"></textarea>
+                                </td>
+                                <td style="padding-left:10px ">
+                                    <!-- {{mapel.extra3_ket}} -->
+                                    <span *ngIf="!editDesc">{{mapel.extra3_ket}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.extra3_ket" *ngIf="editDesc"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <b>D. Ketidakhadiran</b><br>
+                        <table class="table table-bordered raport">
+                            <tr >
+                                <td class="td-center">
+                                    Sakit
+                                </td>
+                                <td class="td-center">
+                                      <!-- {{mapel.sakit}}  -->
+                                      <span *ngIf="!editDesc">{{mapel.sakit}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.sakit" *ngIf="editDesc"></textarea>
+                                      Hari
+                                </td>
+                            </tr>
+                            <tr >
+                                <td class="td-center">
+                                    Izin
+                                </td>
+                                <td class="td-center">
+                                      <!-- {{mapel.izin}}  -->
+                                      <span *ngIf="!editDesc">{{mapel.izin}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.izin" *ngIf="editDesc"></textarea>
+                                       Hari
+                                </td>
+                            </tr>
+                            <tr >
+                                <td class="td-center">
+                                    Alpa
+                                </td>
+                                <td class="td-center">
+                                    <!-- {{mapel.alpa}}  -->
+                                    <span *ngIf="!editDesc">{{mapel.alpa}}</span>
+                                    <textarea type="text" [(ngModel)]="mapel.alpa" *ngIf="editDesc"></textarea>
+                                    Hari
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="container">
+                            <div class="float-right">
+                                Pangkalan Bun, {{_datas.formatTanggal(mapel.tglRaport)}} <br>
+                                wali kelas, <br><br><br><br>
+                                <u>{{_datas.dataProfil.namaGuru}}</u><br>
+                                NIP.{{_datas.dataProfil.nip}}
+                            </div>
+                        </div>
+                        <div class="row" style="position: fixed;z-index:99999;    top: 77px;right: 40px;">
+                                
+                                <button class="btn btn-danger" (click)="update()">Simpan</button>
+                                <button class="btn btn-primary" (click)="showRaport = false;mapel = {};editDesc = false">Tutup</button>
+                        </div>  
+            </div>
+           
+            <!-- <div class="col-md-2"></div> -->
+         
+        </div>
+    </div>

@@ -1,0 +1,20 @@
+.table-bordered td{
+    padding: 1px;
+}
+
+.dialogbox2 table, .dialogbox2 th,.dialogbox2 td{
+    border: 1px solid black !important;
+}
+
+.dialogbox2 table{
+    border-collapse: collapse;
+}
+
+.kop table, .kop th, .kop td{
+    border: 0px solid white !important;
+}
+
+.raport textarea{
+    height: 150px;
+    width: 100%;
+}

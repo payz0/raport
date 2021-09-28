@@ -1,0 +1,27 @@
+<header class="bg-info">
+    <div class="titleDash">
+        <h1 style="    font-family: none;color: white;font-weight: bold;">E-raport</h1>
+        <h3 class="smp1">SMP Negeri 1 Arut Selatan</h3>
+    </div>
+</header>
+<app-home *ngIf="!login"></app-home>
+<div class="row container-fluid" style="min-height: 92vh;" *ngIf="login">
+        <div class="col-sm-2 bg-dark text-white sidebar" *ngIf="_datas.mobile">
+            <app-dashboard></app-dashboard>
+        </div>
+        <div class="col-sm-10" style="margin: 100px 18% 6% 18%;">
+            <div class="container">
+                <ng-container [ngSwitch]="_datas.router">
+                    <app-guru  *ngSwitchCase ="'guru'"></app-guru>
+                    <app-siswa *ngSwitchCase ="'siswa'"></app-siswa>
+                    <app-kelas *ngSwitchCase ="'kelas'"></app-kelas>
+                    <app-raport *ngSwitchCase ="'raport'"></app-raport>
+                    <app-hasil *ngSwitchCase ="'hasil'"></app-hasil>
+                </ng-container>
+            </div>
+        </div>
+         <div class="col-sm-2 bg-dark text-white sidebar" *ngIf="!_datas.mobile">
+            <app-dashboard></app-dashboard>
+        </div>
+    <!-- </div> -->
+</div>

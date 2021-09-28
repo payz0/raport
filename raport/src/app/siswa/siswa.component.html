@@ -1,0 +1,96 @@
+<div class="row">
+    <b>Tambah Siswa</b>
+    <input type="text" class="form-control" placeholder="nama siswa" [(ngModel)]="siswa.namaSiswa">
+    <input type="text" class="form-control" placeholder="nis" [(ngModel)]="siswa.nis">
+    <input type="text" class="form-control" placeholder="nisn" [(ngModel)]="siswa.nisn">
+    <input type="text" list="kelas" class="form-control" placeholder="kelas" [(ngModel)]="siswa.kelas" (change)="getIdKelas($event)">
+    <datalist id="kelas">
+            <option *ngFor="let kelas of dataKelas" >{{kelas.kelas}}</option>
+    </datalist>
+    <input type="text" class="form-control" placeholder="jenis kelamin" [(ngModel)]="siswa.sex">
+    <button class="btn btn-primary btn-sm" (click)="addNew()" *ngIf="!siapEdit">Tambah Siswa</button>
+    <button class="btn btn-secondary btn-sm" (click)="update()" *ngIf="siapEdit">Update</button>
+    <button class="btn btn-danger btn-sm" (click)="siapEdit = false; siswa = {}" >Batal</button>
+   
+    
+    <div class="container">
+            <hr>
+            <div class="float-right">
+                 <input type="file" (change)="excel($event)" id="excel2" style="display:none">
+                <label for="excel2" class="btn btn-info">Upload excel</label>
+            </div>
+            <b>Daftar Siswa</b>
+            <hr>
+            <select [(ngModel)]="pilihKelas.id_kelas" class="form-control">
+                <option value="">- Semua Kelas -</option>
+                <option value="{{kelas._id}}" *ngFor="let kelas of dataKelas">{{kelas.kelas}}</option>
+            </select>
+            <table class="container table-bordered" >
+                <thead class="bg-dark">
+                    <tr style="color: beige">
+                        <th style="width: fit-content">No</th>
+                        <th>Nama Siswa</th>
+                        <th>L/P</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th>Kelas</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let data of allData |filterBy : pilihKelas;let i = index">
+                        <td class="td-center" style="width: fit-content">{{i+1}}</td>
+                        <td style="vertical-align: middle" >{{data.namaSiswa}}</td>
+                        <td class="td-center" >{{data.sex}}</td>
+                        <td class="td-center" >{{data.nis}}</td>
+                        <td class="td-center" >{{data.nisn}}</td>
+                        <td class="td-center" >{{data.kelas}}</td>
+                        <td class="td-center">
+                            <span class="btn btn-info btn-sm" (click)="edit(data); siapEdit = true">Edit</span> ||
+                            <span style="cursor:pointer" (click)="hapus(data,i)" class="btn btn-danger btn-sm">&times;</span>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<!-- dialogbox -->
+<div class="latar" *ngIf="dialogBox">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="bodybox col-md-8" style="left: 10%">
+                <div class="title">Nama guru</div>
+                <div class="badan">
+                    <table class="container table-bordered">
+                        <thead class="bg-dark">
+                            <tr style="color: beige">
+                                <th>No</th>
+                                <th>Nama SIswa</th>
+                                <th>L/P</th>
+                                <th>NIS</th>
+                                <th>NISN</th>
+                                <th>Kelas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor = "let excel of dataImportExcel;let i = index">
+                                <td class="td-center">{{i+1}}</td>
+                                <td class="td-center" >{{excel.namaSiswa}}</td>
+                                <td class="td-center" >{{excel.sex}}</td>
+                                <td class="td-center" >{{excel.nis}}</td>
+                                <td class="td-center" >{{excel.nisn}}</td>
+                                <td class="td-center">{{excel.kelas}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <button class="btn btn-danger btn-sm" (click)="tambah()">Simpan</button>
+                        <button class="btn btn-secondary btn-sm" (click)="dialogBox = false; dataImportExcel = []">Batal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>

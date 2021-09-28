@@ -1,0 +1,57 @@
+<p class="dash">Dashboard</p>
+
+<div class="sidebar" style="margin-top:80px" *ngIf="_datas.mobile">
+    <div class="container-12">
+        <b *ngIf="_datas.sebagai == 'guru'">Haii!, {{dataProfil.namaGuru}}</b>
+         <b *ngIf="_datas.sebagai == 'siswa'">Haii!, {{dataProfil.namaSiswa}}</b>
+         <b *ngIf="_datas.sebagai == 'admin'">Haii!, Admin</b>
+         <hr>
+         <div class="row">
+            <ul >
+                <li (click)="_datas.router = 'guru'" *ngIf="_datas.sebagai == 'guru' || _datas.sebagai == 'admin' ">
+                    <span >Data guru</span>
+                </li>
+                <li (click)="_datas.router = 'siswa'" *ngIf="_datas.sebagai == 'admin' ">
+                    <span >Daftar Siswa</span>
+                </li>
+                <li (click)="_datas.router = 'raport'" *ngIf="_datas.sebagai == 'guru' && dataProfil.status == 'wali'">
+                    <span >Raport</span>
+                </li>
+                <li (click)="_datas.router = 'kelas'" *ngIf="_datas.sebagai == 'admin' ">
+                    <span >Daftar kelas</span>
+                </li>
+                <li (click)="_datas.router = 'hasil'" *ngIf="_datas.sebagai == 'siswa' ">
+                    <span>Nilai Raport</span>
+                </li>
+                <li (click)="logout()">
+                    <span >Logout</span>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div style="    color: black;position: absolute;top: 50px;" *ngIf="!_datas.mobile" class="mobile">
+    <ul style=" display: flex;list-style: none;">
+                <li (click)="_datas.router = 'guru'" *ngIf="_datas.sebagai == 'guru' || _datas.sebagai == 'admin' ">
+                    <span >Data guru</span>
+                </li>
+                <li (click)="_datas.router = 'siswa'" *ngIf="_datas.sebagai == 'admin' ">
+                    <span >Daftar Siswa</span>
+                </li>
+                <li (click)="_datas.router = 'raport'" *ngIf="_datas.sebagai == 'guru' && dataProfil.status == 'wali'">
+                    <span >Raport</span>
+                </li>
+                <li (click)="_datas.router = 'kelas'" *ngIf="_datas.sebagai == 'admin' ">
+                    <span >Daftar kelas</span>
+                </li>
+                <li (click)="_datas.router = 'hasil'" *ngIf="_datas.sebagai == 'siswa' ">
+                    <span>Nilai Raport</span>
+                </li>
+                <li (click)="logout()">
+                    <span >Logout</span>
+                </li>
+                
+            </ul>
+</div>

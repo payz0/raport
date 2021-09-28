@@ -1,0 +1,156 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+@media only screen and (max-width: 600px) {
+    .sidebar{
+        position: fixed !important;
+        height: 100px !important;
+        z-index: 9999 !important;
+        bottom: 0px !important;
+        top: 87% !important;
+    }
+    
+}
+
+input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+th{
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.td-center{
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+/* untuk dialog box */
+
+.latar2{
+    background: #000000a3;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+}
+
+.latar{
+    background: #000000a3;
+    position: fixed;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    overflow: overlay;
+}
+
+.bodybox2{
+    background: white;
+    padding: 20px;
+    margin-top: 100px;
+    position: relative;
+}
+
+.bodybox{
+    background: white;
+    padding: 20px;
+    margin-top: 100px;
+    position: relative;
+    max-width: 73%;
+    left: 21%;
+    margin-bottom: 100px;
+}
+
+.title{
+    position: absolute;
+    background: #0c0c2c;
+    color: white;
+    left: 0px;
+    width: 100%;
+    top: 0px;
+    padding: 7px;
+}
+
+.badan{
+    margin-top: 27px;
+    margin-bottom: 20px;
+}
+
+/* batas dialog box */
+
+header .titleDash2{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.sidebar{
+    position: fixed;
+    height: 93vh;
+    z-index: 9999;
+    top: 77px;
+}
+
+header .titleDash{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 999999999999999999;
+    width: 100%;
+    background: #337999;
+}
+
+header ul{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+header ul li{
+    
+    cursor: pointer;
+    padding: 20px;
+    transition: 300ms all;
+}
+
+header ul li:hover{
+    background: rgb(54, 187, 208);
+}
+
+/* .sidebar ul{
+    margin-left: -65px;
+} */
+.sidebar ul li{
+    list-style: none;
+    cursor: pointer;
+    padding: 10px 10px;
+    transition: 300ms all;
+}
+
+.sidebar ul li:hover{
+    background: rgb(54, 187, 208);
+}
+
+.smp1{
+    font-family: fantasy;
+    text-shadow: 2px 2px 2px black;
+    color: white;
+}
+
+#page{
+    page-break-inside: avoid;
+}
+
+#nextpage1 {
+    page-break-before: always;
+    padding-top:150px;
+  }
